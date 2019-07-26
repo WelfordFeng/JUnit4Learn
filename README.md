@@ -21,6 +21,7 @@
    1. assertThat
    2. 使用hamcrest的匹配方法
    3. 示例：
+   
      - assertThat(n, allOf(greaterThan(1), lessThan(15))); 条件都满足
      - assertThat(n, anyOf(greaterThan(16, lessThan(8)))); 只要满足其中一个
      - assertThat(n, anything());  什么值都通过
