@@ -15,9 +15,17 @@
  */
 package junit;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * <p> Title: </p>
@@ -29,17 +37,58 @@ import static org.junit.Assert.assertEquals;
  * @create: 2019/7/25 15:36
  */
 public class CalculatorTest {
+
+    static Calculator calculator;
+
+    /**静态类，类执行时执行*/
+    @BeforeClass
+    public static void testBeforeClass() {
+        calculator = new Calculator();
+        System.out.println("BeforeClass Test");
+    }
+
+    /**
+     * 每个Test都会运行
+     * */
+    @Before
+    public void testBefore() {
+        System.out.println("Before Test");
+    }
+
     @Test
-    public void evaluateExpressionTest(){
-        Calculator calculator = new Calculator();
+    public void testEvaluate(){
+        System.out.println("Run testEvaluate");
         int sum = calculator.evaluate("1+2+3");
         assertEquals(6, sum);
     }
 
     @Test
-    public void addTest() {
-        Calculator calculator = new Calculator();
+    public void testAdd() {
+        System.out.println("Run testAdd");
         int sum = calculator.add(2, 3);
         assertEquals(5, sum);
+        assertTrue("sum not le 5",sum <= 5);
+        assertThat("sum not 5", sum, is(5));
+    }
+
+    @Ignore
+    @Test(expected = ArithmeticException.class, timeout = 1000)
+    public void testDiv() {
+        System.out.println("Run testDiv");
+        int div = calculator.div(8, 0);
+
+    }
+
+    /**每个Test方法都会执行*/
+    @After
+    public void testAfter() {
+        System.out.println("After Test");
+    }
+
+    /**静态类，类执行时执行*/
+    @AfterClass
+    public static void testAfterClass() {
+        calculator = null;
+        System.out.println("AfterClass Test");
     }
 }
